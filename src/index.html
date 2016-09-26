@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="budgetApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Budget Tracker</title>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/src/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+</head>
+
+<body ng-controller="mainCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron text-center">
+                <h1>Budget Tracker</h1>
+            </div>
+            <!-- End Jumbotron -->
+        </div>
+        <!-- End Row -->
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">Income Entries</div>
+                    <div class="panel-body">
+                        <label>Description</label>
+                        <input ng-model="incomeObject.text" type="text" class="form-control" required="required">
+                        <br>
+                        <label>Amount</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">$</div>
+                            <input ng-model="incomeObject.amount" type="number" step=0.01 class="form-control" required="required">
+                        </div>
+                        <br>
+                        <button ng-click="getIncome()" class="btn btn-success form-control"><span class="glyphicon glyphicon-plus"></span> Add Income</button>
+                    </div>
+                    <!-- Panel body -->
+                    <div class="panel-body">
+                        <!-- Output Table -->
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Description</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in incomeArray">
+                                    <td class="text-left">
+                                        <p>{{item.text}}</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p>{{item.amount | currency : "$"}}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Panel body -->
+                </div>
+                <!-- Panel Success -->
+            </div>
+            <!-- Column -->
+            <!-- End Income -->
+            <div class="col-xs-6">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">Expense Entries</div>
+                    <div class="panel-body">
+                        <label>Description</label>
+                        <input ng-model="expenseObject.text" type="text" class="form-control">
+                        <br>
+                        <label>Amount</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">$</div>
+                            <input ng-model="expenseObject.amount" class="form-control">
+                        </div>
+                        <br>
+                        <button ng-click="getExpense()" class="btn btn-danger form-control">
+                            <span class="glyphicon glyphicon-plus"></span> Add Expense</button>
+                    </div>
+                    <!-- End Expense Panel -->
+                    <!-- End Expense Column -->
+                    <!--  End Row -->
+                    <div class="panel-body">
+                        <!-- Output Table -->
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Description</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in expenseArray">
+                                    <td class="text-left">
+                                    <p>{{item.text}}</p>
+                                    </td>
+                                    <td class="text-right">
+                                        <p>{{item.amount | currency: "$"}}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">Summary</div>
+                    <div class="panel-body">
+                        <div class="col-xs-6 text-center">
+                            <label>Total Income</label>
+                            <p>{{totalIncome | currency: "$"}}</p>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <label>Total Expense</label>
+                            <p>{{totalExpense | currency: "$"}}</p>
+                        </div>
+                        <div class="row text-center">
+                            <label>Left After Spending</label>
+                            <p>{{totalLeft | currency: "$"}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Container -->
+    <!-- bower:js -->
+    <script src="/src/bower_components/angular/angular.js"></script>
+    <script src="/src/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/src/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- endbower -->
+    <!-- inject:js -->
+    <script src="/src/app.js"></script>
+    <script src="/src/controller.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>
