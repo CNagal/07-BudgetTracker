@@ -6,8 +6,8 @@ var gulp = require('gulp'),
     inject = require('gulp-inject'),    
     open = require('gulp-open'); 
 
-var jsSources = ['app/*.js'],
-    cssSources = ['app/**/*.css'],
+var jsSources = ['src/*.js'],
+    cssSources = ['src/**/*.css'],
     htmlSources = ['**/*.html'];
 
 gulp.task('watch', function() {
@@ -16,14 +16,14 @@ gulp.task('watch', function() {
     gulp.watch(htmlSources, ['html']);
 });
 
-var paths = ['./bower_components/','./app/*.js','./app/**/*.css'];
+var paths = ['./src/bower_components/','./src/*.js','./src/**/*.css'];
 
-gulp.task('injectables', function() {
+gulp.task('inject', function() {
     var sources = gulp.src(paths, {read: false});
-    return gulp.src('index.html')
+    return gulp.src('./src/index.html')
         .pipe(wiredep())
-        .pipe(inject(sources))
-        .pipe(gulp.dest('.'));
+        .pipe(inject(sources, { relative: true }))
+        .pipe(gulp.dest('./src'));
 });
 
 gulp.task('js', function() {
@@ -43,7 +43,7 @@ gulp.task('css', function() {
 
 gulp.task('connect', function() {
     connect.server({
-        root: '.',
+        root: './src',
         livereload: true
     })
 });
@@ -53,9 +53,9 @@ gulp.task('app', function(){
         uri: 'http://localhost:8080',
         app: 'chrome'
     };
-    gulp.src('./index.html')
+    gulp.src('./src/index.html')
         .pipe(open(options));
 });
 
 
-gulp.task('serve', ['connect', 'watch', 'injectables', 'app']);
+gulp.task('serve', ['connect', 'watch', 'inject', 'app']);

@@ -21,6 +21,7 @@ angular.module("budgetApp").controller('mainCtrl', function($scope) {
 		$scope.expenseArray.push(angular.copy($scope.expenseObject));
 		$scope.totalExpense += $scope.expenseObject.amount;
 		$scope.expenseObject = {};
+		
 		$scope.totalLeft = $scope.totalIncome - $scope.totalExpense;
 	};
 
